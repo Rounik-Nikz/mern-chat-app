@@ -50,7 +50,22 @@ A full-featured real-time chat application built with the MERN stack (MongoDB, E
 4. Subsequent requests include token for authorization
 5. Middleware verifies token before granting access
 
-![1745676009454](system_designs/README/1745676009454.png)
+```mermaid
+%%{init: {'theme':'dark'}}%%
+sequenceDiagram
+    participant Client
+    participant Server
+    participant DB
+    
+    Client->>Server: POST /auth/login (credentials)
+    Server->>DB: Validate user
+    DB-->>Server: User data
+    Server->>Server: Generate JWT
+    Server-->>Client: Set HTTP-only cookie
+    Client->>Server: Subsequent requests with cookie
+    Server->>Server: Verify JWT middleware
+    Server-->>Client: Authorized response
+```    
 
 ### Real-time Messaging Flow
 
